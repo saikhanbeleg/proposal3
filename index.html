@@ -165,6 +165,9 @@
       border-radius: 50%;
       animation: spin 25s linear infinite;
       z-index: 2;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
     }
     .circle-container img {
       position: absolute;
@@ -175,23 +178,24 @@
       box-shadow: 0 0 15px rgba(0,0,0,0.2);
     }
     @keyframes spin {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
+      from { transform: translate(-50%, -50%) rotate(0deg); }
+      to { transform: translate(-50%, -50%) rotate(360deg); }
     }
   </style>
 </head>
 <body>
   <div class="circle-container">
-    <img src="C:\Users\User\Desktop\mypages\html\images\1.jpg" style="top:0; left:165px; width:120px; height:120px; z-index:5;">
-    <img src="C:\Users\User\Desktop\mypages\html\images\2.jpg" style="top:50px; left:310px;">
-    <img src="C:\Users\User\Desktop\mypages\html\images\3.jpg" style="top:165px; left:330px;">
-    <img src="C:\Users\User\Desktop\mypages\html\images\4.jpg" style="top:280px; left:310px;">
-    <img src="C:\Users\User\Desktop\mypages\html\images\5.jpg" style="top:330px; left:165px; width:120px; height:120px; z-index:40;">
-    <img src="C:\Users\User\Desktop\mypages\html\images\6.jpg" style="top:280px; left:20px;">
-    <img src="C:\Users\User\Desktop\mypages\html\images\7.jpg" style="top:165px; left:0;">
-    <img src="C:\Users\User\Desktop\mypages\html\images\8.jpg" style="top:50px; left:20px;">
-    <img src="C:\Users\User\Desktop\mypages\html\images\9.jpg" style="top:120px; left:250px;">
-    <img src="C:\Users\User\Desktop\mypages\html\images\10.jpg" style="top:220px; left:80px;">
+    <!-- Adjusted positions for even circle spacing: angles ~0°, 36°, 72°, etc. for 10 images -->
+    <img src="images/1.jpg" alt="Зураг 1" style="top: 50%; left: 50%; transform: translate(-50%, -50%) translateY(-165px); width:120px; height:120px; z-index:5;"> <!-- Center top, larger -->
+    <img src="images/2.jpg" alt="Зураг 2" style="top: 14%; left: 86%; transform: translate(-50%, -50%);"> 
+    <img src="images/3.jpg" alt="Зураг 3" style="top: 50%; left: 100%; transform: translate(-50%, -50%) translateX(165px);"> <!-- Right center -->
+    <img src="images/4.jpg" alt="Зураг 4" style="top: 86%; left: 86%; transform: translate(-50%, -50%);"> 
+    <img src="images/5.jpg" alt="Зураг 5" style="top: 100%; left: 50%; transform: translate(-50%, -50%) translateY(165px); width:120px; height:120px; z-index:40;"> <!-- Center bottom, larger -->
+    <img src="images/6.jpg" alt="Зураг 6" style="top: 86%; left: 14%; transform: translate(-50%, -50%);">
+    <img src="images/7.jpg" alt="Зураг 7" style="top: 50%; left: 0%; transform: translate(-50%, -50%) translateX(-165px);"> <!-- Left center -->
+    <img src="images/8.jpg" alt="Зураг 8" style="top: 14%; left: 14%; transform: translate(-50%, -50%);"> 
+    <img src="images/9.jpg" alt="Зураг 9" style="top: 36%; left: 79%; transform: translate(-50%, -50%);"> 
+    <img src="images/10.jpg" alt="Зураг 10" style="top: 64%; left: 21%; transform: translate(-50%, -50%);">
   </div>
 
   <div class="center-text">💖 Надтай үерхээч 💖</div>
