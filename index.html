@@ -256,6 +256,33 @@
       transition: all 0.3s ease;
     }
 
+    /* Final Title - Hidden until end */
+    .final-title {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, 100vh); /* Start off-screen below */
+      font-size: clamp(1.2rem, 4vw, 2rem);
+      font-weight: 400;
+      color: #ff6b9d;
+      text-shadow: 0 0 15px rgba(255, 107, 157, 0.4), 0 0 30px rgba(255, 107, 157, 0.2);
+      z-index: 4;
+      text-align: center;
+      font-family: 'Dancing Script', cursive;
+      letter-spacing: 1px;
+      padding: 0 20px;
+      box-sizing: border-box;
+      opacity: 0;
+      transition: all 2s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Smooth slide up and fade */
+      white-space: pre-line; /* Preserve line breaks */
+      line-height: 1.4;
+    }
+
+    .final-title.show {
+      transform: translate(-50%, -50%);
+      opacity: 1;
+    }
+
     /* Mobile responsiveness */
     @media (max-width: 768px) {
       .center-text {
@@ -284,6 +311,11 @@
         width: clamp(40px, 10vw, 80px); /* Slightly smaller on mobile */
         transition-duration: 1s; /* Slightly faster entrance on mobile */
       }
+
+      .final-title {
+        font-size: clamp(1rem, 5vw, 1.5rem);
+        top: 60%; /* Adjust position on mobile */
+      }
     }
 
     @media (max-width: 480px) { /* For very small phones */
@@ -309,6 +341,12 @@
       .background-img {
         width: clamp(30px, 12vw, 60px);
         transition-duration: 0.8s;
+      }
+
+      .final-title {
+        font-size: clamp(0.9rem, 6vw, 1.3rem);
+        top: 70%;
+        padding: 0 10px;
       }
     }
   </style>
@@ -339,6 +377,9 @@
     <img class="background-img" src="10.jpg" alt="Girl with teddy bear" style="top: 90%; left: 30%;">
   </div>
 
+  <!-- Final Title - Hidden until images finish -->
+  <div class="final-title" id="final-title">Бид хоёрын өмнө уртаас урт, гэрэл гэгээтэй ирээдүй байх болно гэдэгт би чин сэтгэлээсээ итгэлтэй байна</div>
+
   <script>
     const heartsArray = ["💖", "💘", "💝", "💗", "❤️", "💕"];
 
@@ -368,13 +409,18 @@
         backgroundInterval = setInterval(createBackgroundHeart, 400);
       }, 3000);
 
-      // New: Reveal images one by one after hearts start
+      // Reveal images one by one after hearts start
       const images = document.querySelectorAll('.background-img');
       images.forEach((img, index) => {
         setTimeout(() => {
           img.classList.add('show'); // Fade in and start bobbing
         }, 3000 + index * 600); // Start after 3s (hearts), then 600ms apart for sequential reveal
       });
+
+      // Show final title after all images (last image at ~3000 + 9*600 = 8400ms, +2s buffer)
+      setTimeout(() => {
+        document.getElementById('final-title').classList.add('show');
+      }, 11000);
     }
 
     function sayNo() {
