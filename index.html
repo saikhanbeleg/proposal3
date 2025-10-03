@@ -196,7 +196,7 @@
       transition: opacity 0.5s ease-out;
     }
 
-    /* Animated Background Images Container */
+    /* Animated Background Images Container - Initially hidden */
     .background-images {
       position: fixed;
       top: 0;
@@ -213,47 +213,40 @@
       width: clamp(50px, 8vw, 100px); /* Responsive size */
       height: auto;
       border-radius: 50%; /* Circular for whimsy */
-      opacity: 0.6; /* Semi-transparent */
+      opacity: 0; /* Start hidden */
+      transform: scale(0); /* Start scaled down */
       pointer-events: none;
-      animation: creativeFloat 20s ease-in-out infinite; /* Main creative animation */
       filter: drop-shadow(0 4px 8px rgba(255, 107, 157, 0.3)); /* Pink glow shadow */
+      transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Smooth entrance */
     }
 
-    /* Creative float: Slow upward drift with wobble, scale pulse, and tiny rotation */
-    @keyframes creativeFloat {
-      0% {
-        transform: translateY(0) translateX(0) rotate(0deg) scale(1);
-        opacity: 0.6;
-      }
-      25% {
-        transform: translateY(-10px) translateX(5px) rotate(2deg) scale(1.05);
-        opacity: 0.8;
+    .background-img.show {
+      opacity: 0.6; /* Semi-transparent */
+      transform: scale(1); /* Full size */
+      animation: gentleBob 3s ease-in-out infinite; /* Subtle ongoing bob after entrance */
+    }
+
+    /* Gentle bob: Soft up-down with tiny wobble */
+    @keyframes gentleBob {
+      0%, 100% {
+        transform: translateY(0) rotate(0deg);
       }
       50% {
-        transform: translateY(-20px) translateX(-5px) rotate(-1deg) scale(1.1);
-        opacity: 0.7;
-      }
-      75% {
-        transform: translateY(-10px) translateX(3px) rotate(1deg) scale(1.03);
-        opacity: 0.9;
-      }
-      100% {
-        transform: translateY(0) translateX(0) rotate(0deg) scale(1);
-        opacity: 0.6;
+        transform: translateY(-5px) rotate(1deg);
       }
     }
 
-    /* Vary animation delays and durations for each image to feel organic */
-    .background-img:nth-child(1) { animation-duration: 18s; animation-delay: 0s; }
-    .background-img:nth-child(2) { animation-duration: 22s; animation-delay: 2s; }
-    .background-img:nth-child(3) { animation-duration: 19s; animation-delay: 4s; }
-    .background-img:nth-child(4) { animation-duration: 21s; animation-delay: 6s; }
-    .background-img:nth-child(5) { animation-duration: 20s; animation-delay: 8s; }
-    .background-img:nth-child(6) { animation-duration: 23s; animation-delay: 10s; }
-    .background-img:nth-child(7) { animation-duration: 17s; animation-delay: 12s; }
-    .background-img:nth-child(8) { animation-duration: 24s; animation-delay: 14s; }
-    .background-img:nth-child(9) { animation-duration: 19s; animation-delay: 16s; }
-    .background-img:nth-child(10) { animation-duration: 22s; animation-delay: 18s; }
+    /* Vary bob durations for organic feel */
+    .background-img:nth-child(1) { animation-duration: 2.5s; }
+    .background-img:nth-child(2) { animation-duration: 3s; }
+    .background-img:nth-child(3) { animation-duration: 2.8s; }
+    .background-img:nth-child(4) { animation-duration: 3.2s; }
+    .background-img:nth-child(5) { animation-duration: 2.7s; }
+    .background-img:nth-child(6) { animation-duration: 3.1s; }
+    .background-img:nth-child(7) { animation-duration: 2.9s; }
+    .background-img:nth-child(8) { animation-duration: 3.3s; }
+    .background-img:nth-child(9) { animation-duration: 2.6s; }
+    .background-img:nth-child(10) { animation-duration: 3s; }
 
     /* On hover (for desktop fun), images glow brighter and pulse */
     .background-img:hover {
@@ -289,7 +282,7 @@
 
       .background-img {
         width: clamp(40px, 10vw, 80px); /* Slightly smaller on mobile */
-        animation-duration: 25s; /* Slower on mobile for smoothness */
+        transition-duration: 1s; /* Slightly faster entrance on mobile */
       }
     }
 
@@ -315,7 +308,7 @@
 
       .background-img {
         width: clamp(30px, 12vw, 60px);
-        animation-duration: 30s; /* Even slower */
+        transition-duration: 0.8s;
       }
     }
   </style>
@@ -331,7 +324,7 @@
   <div class="celebration" id="celebration"></div>
   <div class="sad" id="sad">😢</div>
 
-  <!-- Animated Background Images Container -->
+  <!-- Animated Background Images Container - Hidden until yes -->
   <div class="background-images" id="background-images">
     <!-- Your 10 images - Matching your filenames: 1.jpg to 10.jpg -->
     <img class="background-img" src="1.jpg" alt="Sunset pavilion with bikes" style="top: 10%; left: 10%;">
@@ -374,6 +367,14 @@
       setTimeout(() => {
         backgroundInterval = setInterval(createBackgroundHeart, 400);
       }, 3000);
+
+      // New: Reveal images one by one after hearts start
+      const images = document.querySelectorAll('.background-img');
+      images.forEach((img, index) => {
+        setTimeout(() => {
+          img.classList.add('show'); // Fade in and start bobbing
+        }, 3000 + index * 600); // Start after 3s (hearts), then 600ms apart for sequential reveal
+      });
     }
 
     function sayNo() {
